@@ -1,0 +1,25 @@
+{{/* Hugo Blox: Markdown */}}
+{{/* Documentation: https://hugoblox.com/blocks/ */}}
+{{/* License: https://github.com/HugoBlox/kit/blob/main/LICENSE.md */}}
+
+{{/* Initialise */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $content := $block.content }}
+{{ if not (reflect.IsMap $content) }}{{ $content = dict }}{{ end }}
+{{ $title := "" }}
+{{ with index $content "title" }}{{ $title = printf "%v" . | emojify | $page.RenderString }}{{ end }}
+{{ $text := "" }}
+{{ with index $content "text" }}{{ $text = printf "%v" . | emojify | $page.RenderString | safeHTML }}{{ end }}
+
+<div class="flex flex-col items-center max-w-prose mx-auto gap-1 justify-center px-6">
+
+  {{ with $title }}
+  <div class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
+    {{ . }}
+  </div>
+  {{ end }}
+
+  {{/* Match About page bio font size */}}
+  {{ with $text }}<div class="research-prose prose prose-lg dark:prose-invert text-gray-800 dark:text-gray-200 text-base sm:text-lg leading-relaxed max-w-prose">{{ . }}</div>{{ end }}
+</div>

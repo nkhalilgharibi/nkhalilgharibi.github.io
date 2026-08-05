@@ -41,6 +41,9 @@ node_modules/
 # Generated Content
 # ============================================================================
 
+# Watercolour gallery images (local only)
+assets/media/watercolours/
+
 # Pagefind search index
 pagefind/
 static/pagefind/
@@ -67,3 +70,4 @@ Desktop.ini
 
 *.log
 npm-debug.log*
+.venv-academic/

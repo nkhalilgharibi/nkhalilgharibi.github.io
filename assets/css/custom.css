@@ -1,0 +1,44 @@
+/* Even spacing in the About / bio text */
+.bio-text p,
+.bio-text li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.6;
+}
+
+.bio-text ul {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+/* Publications: tight title → list spacing */
+.page-body .mb-6.text-3xl {
+  margin-bottom: 0.15rem !important;
+  line-height: 1.2;
+}
+
+.page-body .mt-16,
+.page-body .sm\:mt-20 {
+  margin-top: 0 !important;
+}
+
+/* Research page: bold theme titles stay body-sized */
+.research-prose strong {
+  font-size: inherit;
+  font-weight: 700;
+}
+
+.research-prose > ol > li {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.research-prose > ol > li > strong,
+.research-prose > ol > li > p:first-child strong {
+  font-size: inherit;
+}
+
+/* Hide empty intro prose box (e.g. Publications page title only) */
+.research-prose:empty {
+  display: none;
+}

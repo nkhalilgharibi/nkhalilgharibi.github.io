@@ -25,5 +25,8 @@ mounts:
       - '**.css'
   - source: layouts
     target: layouts
+  # Prefer local block overrides over module blox mounts
+  - source: layouts/_partials/hbx/blocks
+    target: layouts/_partials/hbx/blocks
   - source: assets
     target: assets

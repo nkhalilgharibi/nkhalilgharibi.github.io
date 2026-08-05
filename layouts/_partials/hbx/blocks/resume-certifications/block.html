@@ -1,0 +1,192 @@
+{{/* Hugo Blox: Certifications (local) — timeline layout matching Education */}}
+
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $content := $block.content }}
+{{ if not (reflect.IsMap $content) }}{{ $content = dict }}{{ end }}
+{{ $design := $block.design }}
+{{ if not (reflect.IsMap $design) }}{{ $design = dict }}{{ end }}
+
+{{ $username := "me" }}
+{{ $username_raw := index $content "username" }}
+{{ if eq (printf "%T" $username_raw) "string" }}
+  {{ $username = strings.TrimSpace $username_raw }}
+{{ end }}
+{{ $data := index site.Data.authors $username | default dict }}
+{{ $certs_raw := index $data "certifications" }}
+
+{{ $date_format := "January 2006" }}
+{{ $date_format_raw := index $design "date_format" }}
+{{ if eq (printf "%T" $date_format_raw) "string" }}
+  {{ $date_format = strings.TrimSpace $date_format_raw | default "January 2006" }}
+{{ end }}
+
+{{ $certs_iter := slice }}
+{{ if reflect.IsSlice $certs_raw }}
+  {{ $certs_iter = $certs_raw }}
+{{ else if reflect.IsMap $certs_raw }}
+  {{ range $certs_raw }}
+    {{ $certs_iter = $certs_iter | append . }}
+  {{ end }}
+{{ end }}
+
+{{ $certs := slice }}
+{{ if gt (len $certs_iter) 0 }}
+  {{ range $certs_iter }}
+    {{ if reflect.IsMap . }}
+      {{ $title := "" }}
+      {{ $icon := "" }}
+      {{ $url := "" }}
+      {{ $awarder := "" }}
+      {{ $date := "" }}
+      {{ $date_start := "" }}
+      {{ $summary := "" }}
+      {{ $certificate_url := "" }}
+
+      {{ with index . "title" }}{{ $title = strings.TrimSpace (printf "%v" .) }}{{ end }}
+      {{ with index . "icon" }}{{ $icon = strings.TrimSpace (printf "%v" .) }}{{ end }}
+      {{ with index . "url" }}{{ $url = strings.TrimSpace (printf "%v" .) }}{{ end }}
+      {{ with index . "awarder" }}{{ $awarder = strings.TrimSpace (printf "%v" .) }}{{ end }}
+      {{ with index . "date" }}{{ $date = strings.TrimSpace (printf "%v" .) }}{{ end }}
+      {{ with index . "date_start" }}{{ $date_start = strings.TrimSpace (printf "%v" .) }}{{ end }}
+      {{ with index . "summary" }}{{ $summary = strings.TrimSpace (printf "%v" .) }}{{ end }}
+      {{ with index . "certificate_url" }}{{ $certificate_url = strings.TrimSpace (printf "%v" .) }}{{ end }}
+
+      {{ if $title }}
+        {{ $date_sort := $date | default $date_start }}
+        {{ $certs = $certs | append (dict "title" $title "icon" $icon "url" $url "awarder" $awarder "date" $date "date_start" $date_start "summary" $summary "certificate_url" $certificate_url "date_sort" $date_sort) }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ $title := "Certifications" }}
+{{ $title_raw := index $content "title" }}
+{{ if $title_raw }}
+  {{ $title = strings.TrimSpace (printf "%v" $title_raw) }}
+{{ end }}
+
+{{ $text := "" }}
+{{ $text_raw := index $content "text" }}
+{{ if $text_raw }}
+  {{ $text = strings.TrimSpace (printf "%v" $text_raw) }}
+{{ end }}
+
+{{ if gt (len $certs) 0 }}
+<div class="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8">
+  <h2 class="mb-10 text-3xl font-bold text-gray-900 dark:text-white text-center">{{ $title | markdownify | emojify }}</h2>
+  {{ with $text }}<p class="mb-8 text-center text-gray-600 dark:text-gray-400">{{ . | markdownify | emojify }}</p>{{ end }}
+
+  <div class="relative">
+    <div class="absolute left-4 sm:left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-amber-500 via-amber-400 to-amber-600/50"></div>
+
+    <div class="space-y-8">
+      {{ range $idx, $cert := sort $certs "date_sort" "desc" }}
+      <div class="group relative pl-12 sm:pl-16">
+
+        <div class="absolute left-0 sm:left-2 top-6 flex items-center justify-center">
+          <div class="relative">
+            <div class="absolute inset-0 w-8 h-8 bg-amber-500/30 rounded-full blur-md group-hover:bg-amber-500/50 transition-all duration-300"></div>
+            <div class="relative w-8 h-8 bg-white dark:bg-gray-900 border-2 border-amber-500 rounded-full flex items-center justify-center group-hover:border-amber-400 group-hover:scale-110 transition-all duration-300">
+              {{ $icon := index $cert "icon" }}
+              {{ if $icon }}
+                {{ partial "functions/get_icon" (dict "name" $icon "attributes" "class='w-4 h-4 text-amber-600 dark:text-amber-400'") }}
+              {{ else }}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-4 h-4 text-amber-600 dark:text-amber-400"><path d="M12 2L9.19 8.63L2 9.24l5.46 4.73L5.82 21L12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+
+        {{ $cert_url := index $cert "url" }}
+        {{ $cert_link := "" }}
+        {{ $cert_target := "" }}
+        {{ if $cert_url }}
+          {{ $cert_link = $cert_url }}
+          {{ $scheme := (urls.Parse $cert_link).Scheme }}
+          {{ if not $scheme }}
+            {{ if not (hasPrefix $cert_link "#") }}
+              {{ $cert_link = $cert_link | relLangURL }}
+            {{ end }}
+            {{ if eq (path.Ext $cert_link) ".pdf" }}{{ $cert_target = "target=\"_blank\" rel=\"noopener\"" }}{{ end }}
+          {{ else if in (slice "http" "https") $scheme }}
+            {{ $cert_target = "target=\"_blank\" rel=\"noopener\"" }}
+          {{ end }}
+        {{ end }}
+
+        <div class="relative bg-white dark:bg-white/[0.02] backdrop-blur-sm rounded-xl border border-gray-200 dark:border-white/[0.06] p-6 hover:bg-gray-50 dark:hover:bg-white/[0.04] hover:border-amber-300 dark:hover:border-amber-500/30 transition-all duration-300 group-hover:translate-x-1 shadow-sm dark:shadow-none">
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+            <div>
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                {{ if $cert_link }}<a href="{{ $cert_link | safeURL }}" {{ $cert_target | safeHTMLAttr }} class="hover:underline">{{ end }}
+                {{ index $cert "title" | markdownify | emojify }}
+                {{ if $cert_link }}</a>{{ end }}
+              </h3>
+              {{ with index $cert "awarder" }}
+              <p class="text-amber-600 dark:text-amber-400 font-medium mt-1">{{ . }}</p>
+              {{ end }}
+            </div>
+
+            <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <time>
+                {{ $date_value := index $cert "date" }}
+                {{ $date_start_value := index $cert "date_start" }}
+                {{ if $date_value }}
+                  {{ $parsed := try (time $date_value) }}
+                  {{ if not $parsed.Err }}
+                    {{ $parsed.Value | time.Format $date_format }}
+                  {{ else }}
+                    {{ $date_value }}
+                  {{ end }}
+                {{ else if $date_start_value }}
+                  {{ $parsed := try (time $date_start_value) }}
+                  {{ if not $parsed.Err }}
+                    {{ $parsed.Value | time.Format $date_format }}
+                  {{ else }}
+                    {{ $date_start_value }}
+                  {{ end }}
+                {{ else }}
+                  {{ i18n "present" | default "Present" }}
+                {{ end }}
+              </time>
+            </div>
+          </div>
+
+          {{ with index $cert "summary" }}
+          <div class="prose dark:prose-invert max-w-none text-gray-600 dark:text-gray-400 leading-relaxed">
+            {{ . | markdownify | emojify }}
+          </div>
+          {{ end }}
+
+          {{ $certificate_url := index $cert "certificate_url" }}
+          {{ if $certificate_url }}
+          {{ $certificate_link := $certificate_url }}
+          {{ $certificate_target := "" }}
+          {{ $certificate_scheme := (urls.Parse $certificate_link).Scheme }}
+          {{ if not $certificate_scheme }}
+            {{ if not (hasPrefix $certificate_link "#") }}
+              {{ $certificate_link = $certificate_link | relLangURL }}
+            {{ end }}
+            {{ if eq (path.Ext $certificate_link) ".pdf" }}{{ $certificate_target = "target=\"_blank\" rel=\"noopener\"" }}{{ end }}
+          {{ else if in (slice "http" "https") $certificate_scheme }}
+            {{ $certificate_target = "target=\"_blank\" rel=\"noopener\"" }}
+          {{ end }}
+          <div class="mt-4 pt-4 border-t border-gray-100 dark:border-white/5">
+            <a href="{{ $certificate_link | safeURL }}" {{ $certificate_target | safeHTMLAttr }} class="inline-flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">
+              {{ i18n "see_certificate" | default "See certificate" }}
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </a>
+          </div>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</div>
+{{ end }}

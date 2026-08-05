@@ -2,115 +2,99 @@ schema: hugoblox/author/v1
 slug: me
 is_owner: true
 name:
-  display: Dr. Alex Johnson
-  given: Alex
-  family: Johnson
+  display: Nargess Khalilgharibi
+  given: Nargess
+  family: Khalilgharibi
   alternate: ''  # Example: 王伟
   pronunciation: ''  # Example: Wáng Wěi
-  pronouns: he/him
+  pronouns: she/her
 postnominals:
   - PhD
-  - MIEEE
-status:
-  icon: "☕️"
-role: Senior AI Research Scientist
+# status:
+#   icon: "☕️"
+role: Senior Research Fellow
 bio: |
-  Alex Johnson is a Senior AI Research Scientist at Meta AI. His research
-  has been published in top conferences like NeurIPS and ICML, with over
-  10,000 citations. Alex is passionate about pushing the boundaries of AI
-  while ensuring ethical development.
+  Nargess is a physicist by training with expertise in both **experimental** and **computational** biophysics, and in working with _in vitro_ and _ex vivo_ tissues. She brings this dual perspective to fundamental questions of **tissue mechanics** in health and disease.
+
+  She completed her **PhD** under the supervision of [Prof Guillaume Charras](https://charraslab.com/) and [Prof Mark Miodownik](http://www.markmiodownik.net/), then joined the laboratory of [Prof Yanlan Mao](https://www.tissuemechanicslab.com/lab-members) as a postdoctoral researcher. She is now a **Senior Research Fellow** with [Prof Yanlan Mao](https://www.tissuemechanicslab.com/lab-members) and [Dr Gabriel Galea](https://profiles.ucl.ac.uk/55207-gabriel-galea/about).
+
+  Nargess's research focuses on three main themes:
+  - **Mechanical response** of **epithelial tissues** to deformation
+  - Role of the **basement membrane mechanics** in defining and maintaining **tissue shape**
+  - **3D modelling** of **neural tube closure**
+
+  Find out more about her research [here](/research/).
 
 affiliations:
-  - name: Meta AI
-    url: https://ai.meta.com/
+  - name: University College London
+    url: https://profiles.ucl.ac.uk/33248-nargess-khalilgharibi
 
 links:
   - icon: at-symbol
-    url: mailto:alex.johnson@example.com
+    url: mailto:nargess.khalilgharibi.11@ucl.ac.uk
     label: E-mail Me
-  - icon: brands/x
-    url: https://x.com/example
+  # - icon: brands/x
+  #   url: https://x.com/example
   - icon: brands/github
-    url: https://github.com/example
-  - icon: brands/linkedin
-    url: https://www.linkedin.com/in/example/
+    url: https://github.com/nkhalilgharibi
+  # - icon: brands/linkedin
+  #   url: https://www.linkedin.com/in/example/
   - icon: academicons/google-scholar
-    url: https://scholar.google.com/citations?user=example
+    url: https://scholar.google.com/citations?user=VhY7kDYAAAAJ&hl=en
   - icon: academicons/orcid
-    url: https://orcid.org/0000-0002-1825-0097
+    url: https://orcid.org/0000-0003-4598-5838
 
 interests:
-  - Large Language Models
-  - Computer Vision
-  - Reinforcement Learning
-  - AI Ethics
+  - Mechanobiology
+  - Tissue Biomechanics
+  - Interactions between living and non-living matter
 
 education:
-  - degree: PhD Computer Science
-    institution: Stanford University
-    start: 2015-09-01
-    end: 2019-06-30
-    summary: |
-      Thesis on scaling laws for neural language models. Published 5 papers in NeurIPS and ICML.
-    button:
-      text: Download dissertation
-      url: /resume.pdf
-      icon: hero/arrow-down-tray
-  - degree: MS Computer Science
-    institution: Carnegie Mellon University
-    start: 2013-09-01
-    end: 2015-05-31
-  - degree: BS Computer Science
-    institution: MIT
-    start: 2009-09-01
-    end: 2013-05-31
+  - degree: PhD
+    institution: University College London, UK
+    year: "2012 – 2017"
+    start: 2012
+    end: 2017
+  - degree: Master of Research in Modelling Biological Complexity
+    institution: University College London, UK
+    year: "2011 – 2012"
+    start: 2011
+    end: 2012
+  - degree: Bachelor of Science in Physics
+    institution: Sharif University of Technology, Iran
+    year: "2007 – 2011"
+    start: 2007
+    end: 2011
 
-experience:
-  - role: Senior AI Research Scientist
-    org: Meta AI
-    start: 2020-01-01
-    summary: |
-      Leading research on multimodal AI systems. Contributed to Llama 2 and other open-source models.
-    button:
-      text: View portfolio
-      url: /
-      icon: hero/arrow-down-tray
-  - role: AI Research Intern
-    org: OpenAI
-    start: 2019-06-01
-    end: 2019-12-31
-    summary: |
-      Worked on GPT-3 scaling. Co-authored paper on prompt engineering.
-
-skills:
-  - name: Technical Skills
-    items:
-      - label: Python
-        level: 5
-      - label: Machine Learning
-        level: 5
-      - label: Cloud Computing
-        level: 4
-  - name: Research & Communication
-    items:
-      - label: Academic Writing
-        level: 5
-      - label: Conference Presentations
-        level: 4
-      - label: Grant Proposals
-        level: 4
-
-languages:
-  - name: English
-    level: 5
-    label: Native
-  - name: Spanish
-    level: 4
-    label: Fluent
+certifications:
+  - title: 'Supervised Machine Learning: Regression and Classification'
+    awarder: Coursera (DeepLearning.AI & Stanford University)
+    date: "2026-06-27"
+    url: https://coursera.org/share/e7316ac806dfa77412e02cf1c5c5ae1e
+    icon: hero/academic-cap
+  - title: Fellowship of the Higher Education Academy
+    awarder: Advance HE
+    date: "2024-07-23"
+    icon: hero/academic-cap
 
 awards:
-  - title: Best Paper Award
-    awarder: NeurIPS
-    date: "2022-12-01"
-    summary: Awarded for groundbreaking work on efficient training of large models.
+  - title: Honor Fell / Company of Biologists Travel Award 
+    # awarder: NeurIPS
+    date: "2024"
+    # summary: Awarded for groundbreaking work on efficient training of large models.
+    icon: hero/trophy
+  - title: American Society for Matrix Biology Travel Award 
+    # awarder: NeurIPS
+    date: "2024"
+    # summary: Awarded for groundbreaking work on efficient training of large models.
+    icon: hero/trophy
+  - title: NC3Rs Early Career Engagement Award
+    # awarder: NeurIPS
+    date: "2022"
+    # summary: Awarded for groundbreaking work on efficient training of large models.
+    icon: hero/trophy
+  - title: NC3Rs Training Fellowship
+    # awarder: NeurIPS
+    date: "2020"
+    # summary: Awarded for groundbreaking work on efficient training of large models.
     icon: hero/trophy

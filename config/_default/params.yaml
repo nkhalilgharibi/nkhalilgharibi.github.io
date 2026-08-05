@@ -13,7 +13,7 @@ hugoblox:
   # ────────────────────────────────────────────────────────────────────────────
   identity:
     # Site name - shown in navbar, footer, copyright, and browser title by default
-    name: "Your Name"
+    name: "Nargess Khalilgharibi"
     # Legal entity for copyright notices (defaults to name if not set)
     organization: ""
     # Schema.org type for structured data
@@ -24,8 +24,8 @@ hugoblox:
     description: "The highly-customizable Hugo Academic theme powered by HugoBlox
       Kit. Easily create your personal academic website."
     # Social accounts (used for meta tags like Twitter Cards)
-    social:
-      twitter: "GoOwnable" # Twitter/X handle for Twitter Cards (without @)
+    # social:
+    #   twitter: "GoOwnable" # Twitter/X handle for Twitter Cards (without @)
 
   # ────────────────────────────────────────────────────────────────────────────
   # THEME
@@ -87,6 +87,7 @@ hugoblox:
     sticky: true
     # Menu alignment
     align: center # left | center | right
+    show_title: false #hide the title in the header
     # Feature toggles
     search: true
     theme_toggle: true
@@ -165,7 +166,7 @@ hugoblox:
       enable: true
     # Academic citations
     citations:
-      style: apa # apa | mla | chicago | ieee
+      style: harvard # apa | mla | harvard
 
   # ────────────────────────────────────────────────────────────────────────────
   # SEARCH
