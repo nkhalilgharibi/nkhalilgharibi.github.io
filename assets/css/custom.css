@@ -98,3 +98,9 @@
 .dark .research-theme--primary .research-theme-body a {
   color: rgb(96 165 250); /* blue-400 / primary (dark) */
 }
+
+/* Species names: italic, but same colour as body text */
+.research-theme-body .scientific-name {
+  font-style: italic;
+  color: inherit;
+}

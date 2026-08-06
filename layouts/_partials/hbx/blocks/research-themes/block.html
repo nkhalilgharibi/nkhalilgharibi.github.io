@@ -3,6 +3,8 @@
 {{ $block := .wcBlock }}
 {{ $content := $block.content }}
 {{ if not (reflect.IsMap $content) }}{{ $content = dict }}{{ end }}
+{{ $design := $block.design }}
+{{ if not (reflect.IsMap $design) }}{{ $design = dict }}{{ end }}
 
 {{ $title := "" }}
 {{ with index $content "title" }}{{ $title = printf "%v" . | emojify | $page.RenderString }}{{ end }}
@@ -17,37 +19,39 @@
 {{ $icon_name := "beaker" }}
 {{ with index $content "icon" }}{{ $icon_name = strings.TrimSpace (printf "%v" .) }}{{ end }}
 
+{{ $layout := "timeline" }}
+{{ with index $design "layout" }}{{ $layout = strings.TrimSpace (printf "%v" .) }}{{ end }}
+{{ with index $content "layout" }}{{ $layout = strings.TrimSpace (printf "%v" .) }}{{ end }}
+{{ $is_columns := eq $layout "columns" }}
+
 {{ $accent_styles := dict
   "secondary" (dict
-    "bar" "from-secondary-500 via-secondary-400 to-secondary-600/50"
     "dot" "bg-secondary-500/30 group-hover:bg-secondary-500/50"
     "ring" "border-secondary-500 group-hover:border-secondary-400"
     "icon" "text-secondary-600 dark:text-secondary-400"
-    "border" "hover:border-secondary-300 dark:hover:border-secondary-500/30"
+    "border" "hover:border-secondary-300 dark:hover:border-secondary-500/30 border-t-secondary-500"
     "heading" "text-secondary-700 dark:text-secondary-300"
     "class" "research-theme--secondary"
   )
   "amber" (dict
-    "bar" "from-amber-500 via-amber-400 to-amber-600/50"
     "dot" "bg-amber-500/30 group-hover:bg-amber-500/50"
     "ring" "border-amber-500 group-hover:border-amber-400"
     "icon" "text-amber-600 dark:text-amber-400"
-    "border" "hover:border-amber-300 dark:hover:border-amber-500/30"
+    "border" "hover:border-amber-300 dark:hover:border-amber-500/30 border-t-amber-500"
     "heading" "text-amber-700 dark:text-amber-300"
     "class" "research-theme--amber"
   )
   "primary" (dict
-    "bar" "from-primary-500 via-primary-400 to-primary-600/50"
     "dot" "bg-primary-500/30 group-hover:bg-primary-500/50"
     "ring" "border-primary-500 group-hover:border-primary-400"
     "icon" "text-primary-600 dark:text-primary-400"
-    "border" "hover:border-primary-300 dark:hover:border-primary-500/30"
+    "border" "hover:border-primary-300 dark:hover:border-primary-500/30 border-t-primary-500"
     "heading" "text-primary-700 dark:text-primary-300"
     "class" "research-theme--primary"
   )
 }}
 
-<div class="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8">
+<div class="mx-auto w-full {{ if $is_columns }}max-w-6xl{{ else }}max-w-4xl{{ end }} px-4 sm:px-6 lg:px-8">
   {{ with $title }}
   <h2 class="mb-4 text-3xl font-bold text-gray-900 dark:text-white text-center">{{ . }}</h2>
   {{ end }}
@@ -56,6 +60,44 @@
   <div class="mb-10 text-center text-base sm:text-lg leading-relaxed text-gray-800 dark:text-gray-200 max-w-3xl mx-auto">{{ . }}</div>
   {{ end }}
 
+  {{ if $is_columns }}
+  {{/* Three-column card grid (Research) */}}
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+    {{ range $themes }}
+      {{ if not (reflect.IsMap .) }}{{ continue }}{{ end }}
+      {{ $accent_key := "primary" }}
+      {{ with index . "accent" }}{{ $accent_key = printf "%v" . }}{{ end }}
+      {{ $style := index $accent_styles $accent_key | default (index $accent_styles "primary") }}
+      {{ $theme_title := "" }}
+      {{ with index . "title" }}{{ $theme_title = printf "%v" . }}{{ end }}
+      {{ $theme_text := "" }}
+      {{ with index . "text" }}{{ $theme_text = printf "%v" . | emojify | $page.RenderString | safeHTML }}{{ end }}
+
+      <div class="group flex">
+        <div class="research-theme {{ index $style "class" }} relative flex flex-col w-full bg-white dark:bg-white/[0.02] backdrop-blur-sm rounded-xl border border-gray-200 dark:border-white/[0.06] border-t-4 {{ index $style "border" }} p-5 shadow-sm dark:shadow-none transition-all duration-300 hover:-translate-y-0.5">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="relative flex-shrink-0">
+              <div class="absolute inset-0 w-9 h-9 {{ index $style "dot" }} rounded-full blur-md transition-all duration-300"></div>
+              <div class="relative w-9 h-9 bg-white dark:bg-gray-900 border-2 {{ index $style "ring" }} rounded-full flex items-center justify-center">
+                {{ partial "functions/get_icon" (dict "name" $icon_name "attributes" (printf "class='w-4 h-4 %s'" (index $style "icon"))) }}
+              </div>
+            </div>
+            {{ with $theme_title }}
+            <h3 class="text-lg font-bold {{ index $style "heading" }} leading-snug">{{ . }}</h3>
+            {{ end }}
+          </div>
+          {{ with $theme_text }}
+          <div class="research-theme-body research-prose prose dark:prose-invert text-gray-800 dark:text-gray-200 text-sm sm:text-base leading-relaxed max-w-none flex-1">
+            {{ . }}
+          </div>
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+  </div>
+
+  {{ else }}
+  {{/* Vertical timeline (Teaching and default) */}}
   <div class="relative">
     <div class="absolute left-4 sm:left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-secondary-500 via-amber-400 to-primary-600/50"></div>
 
@@ -94,4 +136,5 @@
       {{ end }}
     </div>
   </div>
+  {{ end }}
 </div>

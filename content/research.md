@@ -29,13 +29,14 @@ sections:
 
             1. Using **advanced microscopy** with custom **mechanical testing** and **image-analysis** pipelines, Nargess has characterised how the BM responds to deformation and maintains tissue shape over long timescales (~5 hours). She quantified the collagen IV network — a major BM component — and how it remodels under load ([Khalilgharibi et al., _bioRxiv_, 2026](https://www.biorxiv.org/content/10.64898/2026.04.23.720416v1)).
             2. To link microscopic collagen IV architecture to macroscopic mechanics, she collaborated with theoretical biophysicists on a coarse-grained model that retains biochemical bond specificity ([Meadowcroft et al., _PRX Life_, 2025](http://dx.doi.org/10.1103/gdd5-rnh7)).
-            3. She has also developed a generalised finite-element (**FEM**) platform to probe the role of the BM, and the extracellular matrix more broadly, in tissue shaping. The platform was used to study basal folding during _Drosophila_ wing disc morphogenesis ([Valencia-Expósito et al., _EMBO Journal_, 2025](http://dx.doi.org/10.1038/s44318-025-00384-6)), and is being prepared for release as a tool for hypothesis testing and experiment design.
+            3. She has also developed a generalised finite-element (**FEM**) platform to probe the role of the BM, and the extracellular matrix more broadly, in tissue shaping. The platform was used to study basal folding during <span class="scientific-name">Drosophila</span> wing disc morphogenesis ([Valencia-Expósito et al., _EMBO Journal_, 2025](http://dx.doi.org/10.1038/s44318-025-00384-6)), and is being prepared for release as a tool for hypothesis testing and experiment design.
 
         - title: 3D modelling of neural tube closure
           accent: primary
           text: |-
             Neural tube closure (NTC) folds a flat epithelial sheet into a tube; incomplete closure causes severe birth defects. Nargess is adapting the **FEM** platform to model NTC in **3D**, with multiple tissue layers and tunable geometries, boundary conditions, growth rates, and mechanical properties.
     design:
+      layout: columns
       spacing:
         padding: ["2.5rem", "0", "2.5rem", "0"]
 ---
