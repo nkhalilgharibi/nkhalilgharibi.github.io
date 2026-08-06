@@ -1,0 +1,97 @@
+{{/* Local: Research themes as coloured cards (matches Education & Awards accents) */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $content := $block.content }}
+{{ if not (reflect.IsMap $content) }}{{ $content = dict }}{{ end }}
+
+{{ $title := "" }}
+{{ with index $content "title" }}{{ $title = printf "%v" . | emojify | $page.RenderString }}{{ end }}
+{{ $intro := "" }}
+{{ with index $content "intro" }}{{ $intro = printf "%v" . | emojify | $page.RenderString | safeHTML }}{{ end }}
+
+{{ $themes := slice }}
+{{ with index $content "themes" }}
+  {{ if reflect.IsSlice . }}{{ $themes = . }}{{ end }}
+{{ end }}
+
+{{ $icon_name := "beaker" }}
+{{ with index $content "icon" }}{{ $icon_name = strings.TrimSpace (printf "%v" .) }}{{ end }}
+
+{{ $accent_styles := dict
+  "secondary" (dict
+    "bar" "from-secondary-500 via-secondary-400 to-secondary-600/50"
+    "dot" "bg-secondary-500/30 group-hover:bg-secondary-500/50"
+    "ring" "border-secondary-500 group-hover:border-secondary-400"
+    "icon" "text-secondary-600 dark:text-secondary-400"
+    "border" "hover:border-secondary-300 dark:hover:border-secondary-500/30"
+    "heading" "text-secondary-700 dark:text-secondary-300"
+    "class" "research-theme--secondary"
+  )
+  "amber" (dict
+    "bar" "from-amber-500 via-amber-400 to-amber-600/50"
+    "dot" "bg-amber-500/30 group-hover:bg-amber-500/50"
+    "ring" "border-amber-500 group-hover:border-amber-400"
+    "icon" "text-amber-600 dark:text-amber-400"
+    "border" "hover:border-amber-300 dark:hover:border-amber-500/30"
+    "heading" "text-amber-700 dark:text-amber-300"
+    "class" "research-theme--amber"
+  )
+  "primary" (dict
+    "bar" "from-primary-500 via-primary-400 to-primary-600/50"
+    "dot" "bg-primary-500/30 group-hover:bg-primary-500/50"
+    "ring" "border-primary-500 group-hover:border-primary-400"
+    "icon" "text-primary-600 dark:text-primary-400"
+    "border" "hover:border-primary-300 dark:hover:border-primary-500/30"
+    "heading" "text-primary-700 dark:text-primary-300"
+    "class" "research-theme--primary"
+  )
+}}
+
+<div class="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8">
+  {{ with $title }}
+  <h2 class="mb-4 text-3xl font-bold text-gray-900 dark:text-white text-center">{{ . }}</h2>
+  {{ end }}
+
+  {{ with $intro }}
+  <div class="mb-10 text-center text-base sm:text-lg leading-relaxed text-gray-800 dark:text-gray-200 max-w-3xl mx-auto">{{ . }}</div>
+  {{ end }}
+
+  <div class="relative">
+    <div class="absolute left-4 sm:left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-secondary-500 via-amber-400 to-primary-600/50"></div>
+
+    <div class="space-y-8">
+      {{ range $themes }}
+        {{ if not (reflect.IsMap .) }}{{ continue }}{{ end }}
+        {{ $accent_key := "primary" }}
+        {{ with index . "accent" }}{{ $accent_key = printf "%v" . }}{{ end }}
+        {{ $style := index $accent_styles $accent_key | default (index $accent_styles "primary") }}
+        {{ $theme_title := "" }}
+        {{ with index . "title" }}{{ $theme_title = printf "%v" . }}{{ end }}
+        {{ $theme_text := "" }}
+        {{ with index . "text" }}{{ $theme_text = printf "%v" . | emojify | $page.RenderString | safeHTML }}{{ end }}
+
+        <div class="group relative pl-12 sm:pl-16">
+          <div class="absolute left-0 sm:left-2 top-6 flex items-center justify-center">
+            <div class="relative">
+              <div class="absolute inset-0 w-8 h-8 {{ index $style "dot" }} rounded-full blur-md transition-all duration-300"></div>
+              <div class="relative w-8 h-8 bg-white dark:bg-gray-900 border-2 {{ index $style "ring" }} rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                {{ partial "functions/get_icon" (dict "name" $icon_name "attributes" (printf "class='w-4 h-4 %s'" (index $style "icon"))) }}
+              </div>
+            </div>
+          </div>
+
+          <div class="research-theme {{ index $style "class" }} relative bg-white dark:bg-white/[0.02] backdrop-blur-sm rounded-xl border border-gray-200 dark:border-white/[0.06] p-6 {{ index $style "border" }} transition-all duration-300 group-hover:translate-x-1 shadow-sm dark:shadow-none">
+            {{ with $theme_title }}
+            <h3 class="text-xl font-bold {{ index $style "heading" }} mb-3">{{ . }}</h3>
+            {{ end }}
+            {{ with $theme_text }}
+            <div class="research-theme-body research-prose prose prose-lg dark:prose-invert text-gray-800 dark:text-gray-200 text-base sm:text-lg leading-relaxed max-w-none">
+              {{ . }}
+            </div>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+</div>
