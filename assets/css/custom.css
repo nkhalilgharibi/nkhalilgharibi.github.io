@@ -104,3 +104,22 @@
   font-style: italic;
   color: inherit;
 }
+
+/* Publications: italic venues and bold author share accent colour */
+.view-citation em,
+.view-citation i,
+.view-citation strong,
+.view-citation b,
+.view-citation .font-bold,
+.view-citation .font-bold a {
+  color: rgb(13 148 136); /* teal-600 / secondary */
+}
+
+.dark .view-citation em,
+.dark .view-citation i,
+.dark .view-citation strong,
+.dark .view-citation b,
+.dark .view-citation .font-bold,
+.dark .view-citation .font-bold a {
+  color: rgb(45 212 191); /* teal-400 */
+}

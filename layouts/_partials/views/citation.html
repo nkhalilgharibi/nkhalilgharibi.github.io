@@ -35,7 +35,7 @@
     {{ partial "page_metadata_authors" $item }}
   </span>
   ({{ $year }}).
-  <a href="{{ $item.RelPermalink }}" class="underline">{{ $item.Title }}</a>.
+  {{ $item.Title }}.
   {{ with $venue }}{{ . | markdownify }}.{{ end }}
   {{ with $top_award }}
     <span class="ml-1">{{ partial "components/award_badge.html" (dict "award" . "page" $item "variant" "inline") }}</span>
@@ -48,7 +48,7 @@
     {{ partial "page_metadata_authors" $item }}
   </span>
   ({{ $year }})
-  <a href="{{ $item.RelPermalink }}" class="underline">{{ $item.Title }}</a>.
+  {{ $item.Title }}.
   {{ with $venue }}{{ . | markdownify }}.{{ end }}
   {{ with $top_award }}
     <span class="ml-1">{{ partial "components/award_badge.html" (dict "award" . "page" $item "variant" "inline") }}</span>
@@ -60,7 +60,7 @@
   <span class="article-metadata li-cite-author">
     {{ partial "page_metadata_authors" $item }}.
   </span>
-  <a href="{{ $item.RelPermalink }}">{{ $item.Title }}</a>.
+  {{ $item.Title }}.
   {{ with $venue }}{{ . | markdownify }}, {{ end }}{{ $year }}.
   {{ with $top_award }}
     <span class="ml-1">{{ partial "components/award_badge.html" (dict "award" . "page" $item "variant" "inline") }}</span>
